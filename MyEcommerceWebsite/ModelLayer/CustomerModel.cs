@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,47 +12,84 @@ namespace ModelLayer
     /// The main <c>Customer</c> class. 
     /// Contains detail information about a customer.    
     /// </summary>
-    public class CustomerModel : AddressModel
+    public class CustomerModel
     {
+        [Key]
         public int CustomerId { get; set; }             // A customer Id which is provided by the database
-        public string Username { get; set; }                        // Customer's Account
+        
+        [ForeignKey("AccountModel")]
+        public string Username { get; set; }            // Foriegn key from account
+        
+        [Required(ErrorMessage = "Cannot be empty")]
+        [StringLength(30)]
+        [Display(Name = "First Name", Prompt = "Enter First Name")]
         public string Fname { get; set; }              // First name of the customer
-        public string Lname { get; set; }              // Last name of the customer 
-        public string ContactNumber { get; set; }      // The customers contact info
+
+        [Required(ErrorMessage = "Cannot be empty")]
+        [StringLength(30)]
+        [Display(Name = "Last Name", Prompt = "Enter Last Name")]
+        public string Lname { get; set; }              // Last name of the customer
+
+        // Customer's Address 1
+        [Required(ErrorMessage = "Cannot be empty")]
+        [StringLength(40)]
+        [Display(Name = "Customer's Address1", Prompt = "Enter Customer's Address1")]
+        public string Address1 { get; set; }
+
+        // Customer's Address 2
+        [StringLength(40)]
+        [Display(Name = "Customer's Address2", Prompt = "Enter Customer's Address2")]
+        public string Address2 { get; set; }
+
+        // Customer's City
+        [Required(ErrorMessage = "Cannot be empty")]
+        [StringLength(40)]
+        [Display(Name = "City", Prompt = "Enter City")]
+        public string City { get; set; }
+
+        // Customer's Zipcode
+        [Required(ErrorMessage = "Cannot be empty")]
+        [StringLength(40)]
+        [Display(Name = "Zipcode", Prompt = "Enter Zipcode")]
+        public int Zipcode { get; set; }
+
+        // Customer's State
+        [Required(ErrorMessage = "Cannot be empty")]
+        [StringLength(40)]
+        [Display(Name = "State", Prompt = "Enter State")]
+        public string State { get; set; }
+
+        // Customer's Country
+        [Required(ErrorMessage = "Cannot be empty")]
+        [StringLength(40)]
+        [Display(Name = "Country", Prompt = "Enter Country")]
+        public string Country { get; set; }
+
+        // Customer's Phone Number
+        [Required(ErrorMessage = "Cannot be empty")]
+        [Display(Name = "Phone Number", Prompt = "(123) 222-3333")]
+        [RegularExpression(@"^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$",
+         ErrorMessage = "Characters are not allowed.")]
+        public string PhoneNumber { get; set; }      // The customers contact info
+
+        // Customer's Email
+        [Required(ErrorMessage = "Cannot be empty")]
+        [StringLength(30)]
+        [Display(Name = "Email", Prompt = "Example@Example.com")]
         public string Email { get; set; }              // The email of customer
+        
 
-        public CustomerModel() : base() { }
-
-        /// <summary>
-        /// This Constructor is responsible for initializing the state of the customer
-        /// </summary>
-        /// <param name="Account">An Account Object</param>
-        /// <param name="Fname">String First Name</param>
-        /// <param name="Lname">String Last Name</param>
-        /// <param name="Street">String Street</param>
-        /// <param name="City">String City Name</param>
-        /// <param name="State">String State Name</param>
-        /// <param name="Zipcode">String ZipCode</param>
-        /// <param name="ContactNumber">String Contact Number or Phone Number</param>
-        /// <param name="Email">String email of Customer</param>
-        public CustomerModel(string Username, string Fname, string Lname, string Street, string City, string State, string Zipcode, string ContactNumber, string Email) : base(Street, City, State, Zipcode)
-        {
-            this.Fname = Fname;
-            this.Lname = Lname;
-            this.ContactNumber = ContactNumber;
-            this.Email = Email;
-            this.Username = Username;
-        }
+        public CustomerModel(){ }
 
         /// <summary>
         /// Concatinates all of the fields together of the and returns it as a string 
         /// </summary>
         /// <returns>All info about the Client inlcuding Account info</returns>
-        public string CustomerInfo()
-        {
-            string customer_info = $"\t\tCustomer Information\n\tUsername: {this.Username}\n\tFirst Name: {this.Fname}\n\tLast Name: {this.Lname}\n\tAddress: {this.Street}\n\tCity: {this.City}\n\tState: {this.State}\n\tZipcode: {this.ZipCode}\n\tContact Number: {this.ContactNumber}\n\tEmail: {this.Email}\n";
-            return customer_info;
-        }
+        //public virtual string CustomerInfo()
+        //{
+        //    string customer_info = $"\t\tCustomer Information\n\tUsername: {this.Username}\n\tFirst Name: {this.Fname}\n\tLast Name: {this.Lname}\n\tAddress: {this.Address}\n\tContact Number: {this.ContactNumber}\n\tEmail: {this.Email}\n";
+        //    return customer_info;
+        //}
 
     }
 }

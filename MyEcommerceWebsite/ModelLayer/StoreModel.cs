@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,42 +11,78 @@ namespace ModelLayer
     /// The main <c>Store</c> class. 
     /// Concatinates all of the fields together of the and returns it as a string 
     /// </summary>
-    public class StoreModel : AddressModel, IComparable
+    public class StoreModel: IComparable
     {
+        // Store's Key
+        [Key]
         public int StoreId { get; set; }
+
+        // Store's Name
+        [Required(ErrorMessage = "Cannot be empty")]
+        [StringLength(30)]
+        [Display(Name = "Store Name", Prompt = "Enter Store Name")]
         public string StoreName { get; set; }
-        public string ContactNumber { get; set; }
+
+        // Store's Address 1
+        [Required(ErrorMessage = "Cannot be empty")]
+        [StringLength(40)]
+        [Display(Name = "Store's Address1", Prompt = "Enter Store's Address1")]
+        public string Address1 { get; set; }
+
+        // Store's Address 2
+        [StringLength(40)]
+        [Display(Name = "Store's Address2", Prompt = "Enter Store's Address2")]
+        public string Address2 { get; set; }
+
+        // Store's City
+        [Required(ErrorMessage = "Cannot be empty")]
+        [StringLength(40)]
+        [Display(Name = "City", Prompt = "Enter City")]
+        public string City { get; set; }
+        
+        // Store's Zipcode
+        [Required(ErrorMessage = "Cannot be empty")]
+        [StringLength(40)]
+        [Display(Name = "Zipcode", Prompt = "Enter Zipcode")]
+        public int Zipcode { get; set; }
+
+        // Store's State
+        [Required(ErrorMessage = "Cannot be empty")]
+        [StringLength(40)]
+        [Display(Name = "State", Prompt = "Enter State")]
+        public string State { get; set; }
+
+        // Store's Country
+        [Required(ErrorMessage = "Cannot be empty")]
+        [StringLength(40)]
+        [Display(Name = "Country", Prompt = "Enter Country")]
+        public string Country { get; set; }
+
+        // Stores's Phone Number
+        [Required(ErrorMessage = "Cannot be empty")]
+        [Display(Name = "Phone Number", Prompt = "(123) 222-3333")]
+        [RegularExpression(@"^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$",
+         ErrorMessage = "Characters are not allowed.")]
+        public string PhoneNumber { get; set; }
+
+        // Store's Description
+        [Required(ErrorMessage = "Cannot be empty")]
+        [StringLength(100)]
+        [Display(Name = "Description", Prompt = "Enter Store's Description")]
         public string Description { get; set; }
 
-        public StoreModel() { }
 
-        /// <summary>
-        /// This Constructor is responsible for initizaling the store state
-        /// </summary>
-        /// <param name="StoreName">String name of the store</param>
-        /// <param name="Address">String Addresss</param>
-        /// <param name="City">String City</param>
-        /// <param name="State">String State</param>
-        /// <param name="ZipCode">String ZipCode</param>
-        /// <param name="ContactNumber">String Contact Number</param>
-        /// <param name="Description">String Description</param>
-        public StoreModel(string StoreName, string Street, string City, string State, string ZipCode, string ContactNumber, string Description) : base(Street, City, State, ZipCode)
-        {
-            this.StoreName = StoreName;
-            this.Street = Street;
-            this.ContactNumber = ContactNumber;
-            this.Description = Description;
-        }
+        public StoreModel() { }
 
         /// <summary>
         /// Concatinates all of the fields together of the and returns it as a string 
         /// </summary>
         /// <returns>A string with all if the fields</returns>
-        public string StoreInfo()
-        {
-            string store_info = $"\t\tStore Information\nName: {this.StoreName}\nAddress:{this.Street}\nCity: {this.City}\nState: {this.State}\n{this.ZipCode}\nContact Number: {this.ContactNumber}\nDesciption: {this.Description}";
-            return store_info;
-        }
+        //public virtual string StoreInfo()
+        //{
+        //    string store_info = $"\t\tStore Information\nName: {this.StoreName}\nAddress:{this.Address}\nContact Number: {this.ContactNumber}\nDesciption: {this.Description}";
+        //    return store_info;
+        //}
 
         /// <summary>
         /// The CompareTo is used for sorting algorithms.

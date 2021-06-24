@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,27 +13,25 @@ namespace ModelLayer
     /// </summary>
     public class AccountModel
     {
-        public string Username { get; set; } // User Password
+        [Key()]
+        [StringLength(15)]
+        [Display(Name = "Username", Prompt = "Enter Username")]
+        public string Username { get; set; }
+
+        [Required(ErrorMessage = "Can not be empty")]
+        [StringLength(16)]
+        [Display(Name = "Password", Prompt = "Enter Password")]
         public string Password { get; set; }
 
-        public AccountModel() { }
+        public ICollection<CustomerModel> Customers { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Username"></param>
-        /// <param name="Password"></param>
-        public AccountModel(string Username, string Password)
-        {
-            this.Username = Username;
-            this.Password = Password;
-        }
+        public AccountModel() { }
 
         /// <summary>
         /// The Account Info Method is responsible for returning the Account's username and password
         /// </summary>
         /// <returns></returns>
-        public string AccountInfo()
+        public virtual string AccountInfo()
         {
             string account_info = $"\nUsername:{this.Username}\nPassword: {this.Password}\n";
             return account_info;
