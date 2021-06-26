@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RepositoryLayer;
 
 namespace RepositoryLayer.Migrations
 {
     [DbContext(typeof(MyEcommerceDb))]
-    partial class MyEcommerceDbModelSnapshot : ModelSnapshot
+    [Migration("20210626200748_CutomerModel")]
+    partial class CutomerModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,6 +40,9 @@ namespace RepositoryLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AccountUsername")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Address1")
                         .IsRequired()
@@ -83,16 +88,15 @@ namespace RepositoryLayer.Migrations
                         .HasColumnType("nvarchar(40)");
 
                     b.Property<string>("UsernameRef")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Zipcode")
-                        .IsRequired()
-                        .HasMaxLength(5)
-                        .HasColumnType("nvarchar(5)");
+                    b.Property<int>("Zipcode")
+                        .HasMaxLength(40)
+                        .HasColumnType("int");
 
                     b.HasKey("CustomerId");
 
-                    b.HasIndex("UsernameRef");
+                    b.HasIndex("AccountUsername");
 
                     b.ToTable("Customers");
                 });
@@ -155,7 +159,7 @@ namespace RepositoryLayer.Migrations
                 {
                     b.HasOne("ModelLayer.AccountModel", "Account")
                         .WithMany("Customers")
-                        .HasForeignKey("UsernameRef");
+                        .HasForeignKey("AccountUsername");
 
                     b.Navigation("Account");
                 });

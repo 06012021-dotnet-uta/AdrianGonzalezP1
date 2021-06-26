@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RepositoryLayer;
 
 namespace RepositoryLayer.Migrations
 {
     [DbContext(typeof(MyEcommerceDb))]
-    partial class MyEcommerceDbModelSnapshot : ModelSnapshot
+    [Migration("20210626201532_CustomerModel2")]
+    partial class CustomerModel2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,10 +87,9 @@ namespace RepositoryLayer.Migrations
                     b.Property<string>("UsernameRef")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Zipcode")
-                        .IsRequired()
-                        .HasMaxLength(5)
-                        .HasColumnType("nvarchar(5)");
+                    b.Property<int>("Zipcode")
+                        .HasMaxLength(40)
+                        .HasColumnType("int");
 
                     b.HasKey("CustomerId");
 

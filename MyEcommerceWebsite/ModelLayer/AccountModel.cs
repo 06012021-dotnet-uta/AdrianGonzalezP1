@@ -13,13 +13,14 @@ namespace ModelLayer
     /// </summary>
     public class AccountModel
     {
-        [Key()]
-        [StringLength(15)]
+
+        [Key]
+        [Required(ErrorMessage = "The value is invalid.")]
         [Display(Name = "Username", Prompt = "Enter Username")]
         public string Username { get; set; }
 
-        [Required(ErrorMessage = "Can not be empty")]
-        [StringLength(16)]
+        [Required(ErrorMessage = "The value is invalid.")]
+        [DataType(DataType.Password)]
         [Display(Name = "Password", Prompt = "Enter Password")]
         public string Password { get; set; }
 

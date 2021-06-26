@@ -25,10 +25,10 @@ namespace RepositoryLayer
         protected override void OnConfiguring(DbContextOptionsBuilder options) 
         {
             // Check if options have already been configured in the testing suite.
-            if (!options.IsConfigured)
-            {
-                options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=CodeFirst_MyEcommerceDb;Trusted_Connection=True;");
-            }
+            //if (!options.IsConfigured)
+            //{
+            //    options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=MyEcommerceDb;Trusted_Connection=True;");
+            //}
         }
     }
 }

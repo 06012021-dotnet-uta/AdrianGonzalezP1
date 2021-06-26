@@ -9,7 +9,7 @@ using RepositoryLayer;
 namespace RepositoryLayer.Migrations
 {
     [DbContext(typeof(MyEcommerceDb))]
-    [Migration("20210624064428_InitialCreate")]
+    [Migration("20210625163403_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,13 +23,11 @@ namespace RepositoryLayer.Migrations
             modelBuilder.Entity("ModelLayer.AccountModel", b =>
                 {
                     b.Property<string>("Username")
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Username");
 
@@ -43,8 +41,8 @@ namespace RepositoryLayer.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("AccountModelUsername")
-                        .HasColumnType("nvarchar(15)");
+                    b.Property<string>("AccountUsername")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Address1")
                         .IsRequired()
@@ -89,7 +87,7 @@ namespace RepositoryLayer.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
-                    b.Property<string>("Username")
+                    b.Property<string>("UsernameRef")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Zipcode")
@@ -98,7 +96,7 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("CustomerId");
 
-                    b.HasIndex("AccountModelUsername");
+                    b.HasIndex("AccountUsername");
 
                     b.ToTable("Customers");
                 });
@@ -159,9 +157,11 @@ namespace RepositoryLayer.Migrations
 
             modelBuilder.Entity("ModelLayer.CustomerModel", b =>
                 {
-                    b.HasOne("ModelLayer.AccountModel", null)
+                    b.HasOne("ModelLayer.AccountModel", "Account")
                         .WithMany("Customers")
-                        .HasForeignKey("AccountModelUsername");
+                        .HasForeignKey("AccountUsername");
+
+                    b.Navigation("Account");
                 });
 
             modelBuilder.Entity("ModelLayer.AccountModel", b =>

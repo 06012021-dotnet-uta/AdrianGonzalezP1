@@ -10,8 +10,8 @@ namespace RepositoryLayer.Migrations
                 name: "Accounts",
                 columns: table => new
                 {
-                    Username = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false)
+                    Username = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -45,7 +45,7 @@ namespace RepositoryLayer.Migrations
                 {
                     CustomerId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UsernameRef = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Fname = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Lname = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Address1 = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
@@ -56,23 +56,23 @@ namespace RepositoryLayer.Migrations
                     Country = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    AccountModelUsername = table.Column<string>(type: "nvarchar(15)", nullable: true)
+                    AccountUsername = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Customers", x => x.CustomerId);
                     table.ForeignKey(
-                        name: "FK_Customers_Accounts_AccountModelUsername",
-                        column: x => x.AccountModelUsername,
+                        name: "FK_Customers_Accounts_AccountUsername",
+                        column: x => x.AccountUsername,
                         principalTable: "Accounts",
                         principalColumn: "Username",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Customers_AccountModelUsername",
+                name: "IX_Customers_AccountUsername",
                 table: "Customers",
-                column: "AccountModelUsername");
+                column: "AccountUsername");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
