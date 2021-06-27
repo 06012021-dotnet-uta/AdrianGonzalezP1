@@ -102,7 +102,7 @@ namespace MyEcommerceWebsite.Controllers
                 // Checks if customer was succesfully added to the DB
                 if (_isCustomerCreated)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Login");
                 }
 
             }

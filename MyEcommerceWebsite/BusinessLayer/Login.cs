@@ -27,7 +27,7 @@ namespace BusinessLayer
             bool doesExists;
             try
             {
-               doesExists = await Task.FromResult(_.Accounts.Contains(account, new AccountComparer()));
+               doesExists = await Task.FromResult(_.Accounts.AsEnumerable().Contains(account, new AccountComparer()));
 
             }
             catch (ArgumentNullException e)

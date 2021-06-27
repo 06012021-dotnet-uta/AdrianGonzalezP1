@@ -1,6 +1,8 @@
 ﻿using BusinessLayer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ModelLayer;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,18 +37,30 @@ namespace MyEcommerceWebsite.Controllers
         }
 
         // POST: LoginController/Create
+        /// <summary>
+        /// The Login Succeed mthod checks if user exists. If true it will direct user to the home page
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Index(AccountModel account)
         {
-            try
+            if (ModelState.IsValid) 
             {
-                return RedirectToAction(nameof(Index));
+                bool doesExist = await _login.LoginUserAsync(account);
+
+                if (doesExist)
+                {
+                    // Grab users info
+                    CustomerModel customer = await _login.GetUserInfoAsync(account);
+
+                    // Redirect to Home page
+                    return RedirectToAction("Index","Home",customer);
+                }
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(account);
         }
 
         // GET: LoginController/Edit/5

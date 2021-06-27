@@ -35,6 +35,11 @@ namespace BusinessLayer
                 Console.WriteLine($"Error - Could not create Account:\n{account.AccountInfo()}");
                 return false;
             }
+            catch(DbUpdateException)
+            {
+                Console.WriteLine($"Error - Could not create Account:\n{account.AccountInfo()}");
+                return false;
+            }
 
             return true;
         }
@@ -52,6 +57,12 @@ namespace BusinessLayer
                 await _.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException e)
+            {
+                Console.WriteLine($"Error - Could not create customer:\n{newCustomer.CustomerInfo()}\n");
+                Console.WriteLine($"Error Code => {e.InnerException}");
+                return false;
+            }
+            catch (DbUpdateException e) 
             {
                 Console.WriteLine($"Error - Could not create customer:\n{newCustomer.CustomerInfo()}\n");
                 Console.WriteLine($"Error Code => {e.InnerException}");

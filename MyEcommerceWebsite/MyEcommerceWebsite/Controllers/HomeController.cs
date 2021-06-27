@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ModelLayer;
 using MyEcommerceWebsite.Models;
 using System;
 using System.Collections.Generic;
@@ -18,9 +19,10 @@ namespace MyEcommerceWebsite.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(CustomerModel customer)
         {
-            return View();
+
+            return View(customer);
         }
 
         public IActionResult Privacy()

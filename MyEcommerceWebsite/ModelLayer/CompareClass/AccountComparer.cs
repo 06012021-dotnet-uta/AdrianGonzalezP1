@@ -14,18 +14,28 @@ namespace ModelLayer
     {
         public bool Equals(AccountModel x, AccountModel y)
         {
-            if (x.Username.ToLower().Trim() == y.Username.ToLower().Trim() &&
-                x.Password == y.Password) 
+            //If both object refernces are equal then return true
+            if (object.ReferenceEquals(x, y))
             {
                 return true;
             }
-
-            return false;
+            //If one of the object refernce is null then return false
+            if (x is null || y is null)
+            {
+                return false;
+            }
+            return x.Username.ToLower().Trim() == y.Username.ToLower().Trim() && x.Password == y.Password;
         }
-
         public int GetHashCode(AccountModel obj)
         {
-            return obj.GetHashCode();
+            //If obj is null then return 0
+            if (obj is null)
+            {
+                return 0;
+            }
+            int IDHashCode = obj.Username.GetHashCode();
+            int TotalMarksHashCode = obj.Password.GetHashCode();
+            return IDHashCode ^ TotalMarksHashCode;
         }
     }
 }

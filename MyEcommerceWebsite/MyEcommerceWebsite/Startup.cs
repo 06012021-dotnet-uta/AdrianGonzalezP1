@@ -63,8 +63,17 @@ namespace MyEcommerceWebsite
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Login}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
+                    name: "Home",
+                    pattern: "{controller=Home}/{action}/{Model?}");
+
+                endpoints.MapControllerRoute(
+                    name: "Shopping",
+                    pattern: "{controller=Shopping}/{action}/{id?}");
             });
+
         }
     }
 }
