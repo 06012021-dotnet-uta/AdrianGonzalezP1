@@ -34,9 +34,12 @@ namespace MyEcommerceWebsite
                     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
                 }
             });
-
+            
+            // Add all of the services
             services.AddScoped<ILogin, Login>();
             services.AddScoped<ISignup, Signup>();
+            services.AddScoped<IShop, Shop>();
+            services.AddScoped<IStore, Store>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,8 +73,9 @@ namespace MyEcommerceWebsite
                     pattern: "{controller=Home}/{action}/{Model?}");
 
                 endpoints.MapControllerRoute(
-                    name: "Shopping",
-                    pattern: "{controller=Shopping}/{action}/{id?}");
+                    name: "Shop",
+                    pattern: "{controller=Shop}/{action}/{id?}");
+
             });
 
         }

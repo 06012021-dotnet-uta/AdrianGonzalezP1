@@ -4,7 +4,7 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome @Html.DisplayFor(customer => customer.Fname) @Html.DisplayFor(customer => customer.Lname).</h1>
+    <h1 class="display-4">Welcome @Html.DisplayFor(customer => customer.Fname) @Html.DisplayFor(customer => customer.Lname)</h1>
     <p class="h2"><small class="text-muted">What are we doing today?</small></p>
 </div>
 
@@ -18,7 +18,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col text-center">
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <a asp-controller="Shop" asp-action="Index" class="btn btn-primary">Let's Go</a>
                     </div>
                 </div>
             </div>

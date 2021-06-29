@@ -12,6 +12,8 @@ namespace ModelLayer
     /// <summary>
     /// The Account class is responsible for keeping the Customers Username and password
     /// </summary>
+
+    [Table("Account")]
     public class AccountModel
     {
 

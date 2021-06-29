@@ -13,9 +13,8 @@ namespace MyEcommerceWebsite.Controllers
     {
 
         private readonly ISignup _signup;
-        private string _account_username;
-        private bool _isAccountCreated = false;
-        private bool _isCustomerCreated = false;
+        private bool _isAccountCreated;
+        private bool _isCustomerCreated;
 
         public SignupController(ISignup signup)
         {

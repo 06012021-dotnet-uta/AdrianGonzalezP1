@@ -13,8 +13,11 @@ namespace RepositoryLayer
         // Create all DbSets for all models
         public DbSet<AccountModel> Accounts { get; set; }
         public DbSet<CustomerModel> Customers { get; set; }
-
         public DbSet<StoreModel> Stores { get; set; }
+        public DbSet<ProductModel> Products { get; set; }
+        public DbSet<InventoryModel> Inventories { get; set; }
+        public DbSet<CategoryModel> Categories { get; set; }
+        public DbSet<OrderModel> Orders { get; set; }
 
 
         // Create Constructors

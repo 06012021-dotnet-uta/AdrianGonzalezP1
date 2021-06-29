@@ -1,23 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ModelLayer
 {
+    [Table("Inventory")]
     public class InventoryModel
     {
-        public int StoreId { get; set; }
-        public int ProductId { get; set; }
+        [Key]
+        public int InventoryId { get; set; }
+        public int StoreIdRef { get; set; }
+        public int ProductIdRef { get; set; }
         public int Quantity { get; set; }
 
+        [ForeignKey("ProductIdRef")]
+        public ProductModel Product { get; set; }
+        [ForeignKey("StoreIdRef")]
+        public StoreModel Store { get; set; }
+
         public InventoryModel() { }
-        public InventoryModel(int StoreId, int ProductId, int Quantity)
-        {
-            this.StoreId = StoreId;
-            this.ProductId = ProductId;
-            this.Quantity = Quantity;
-        }
     }
 }

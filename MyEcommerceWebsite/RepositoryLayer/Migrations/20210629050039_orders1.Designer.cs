@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RepositoryLayer;
 
 namespace RepositoryLayer.Migrations
 {
     [DbContext(typeof(MyEcommerceDb))]
-    partial class MyEcommerceDbModelSnapshot : ModelSnapshot
+    [Migration("20210629050039_orders1")]
+    partial class orders1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -200,7 +202,7 @@ namespace RepositoryLayer.Migrations
 
                     b.HasIndex("CategoryIdRef");
 
-                    b.ToTable("Product");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("ModelLayer.StoreModel", b =>
@@ -255,7 +257,7 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("StoreId");
 
-                    b.ToTable("Store");
+                    b.ToTable("Stores");
                 });
 
             modelBuilder.Entity("ModelLayer.CustomerModel", b =>

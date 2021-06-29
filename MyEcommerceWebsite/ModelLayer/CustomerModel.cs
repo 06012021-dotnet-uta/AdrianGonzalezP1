@@ -12,6 +12,7 @@ namespace ModelLayer
     /// The main <c>Customer</c> class. 
     /// Contains detail information about a customer.    
     /// </summary>
+    [Table("Customer")]
     public class CustomerModel
     {
         // A CustomerID
@@ -85,6 +86,8 @@ namespace ModelLayer
 
        [ForeignKey("UsernameRef")]
        public AccountModel Account { get; set; }
+
+       public ICollection<OrderModel> Orders { get; set; }
 
         public CustomerModel(){ }
 
