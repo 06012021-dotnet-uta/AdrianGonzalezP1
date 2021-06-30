@@ -45,6 +45,7 @@ namespace MyEcommerceWebsite
             services.AddScoped<IShop, Shop>();
             services.AddScoped<IStore, Store>();
             services.AddScoped<ICustomer, Customer>();
+            services.AddScoped<IOrderHistory, OrderHistory>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
