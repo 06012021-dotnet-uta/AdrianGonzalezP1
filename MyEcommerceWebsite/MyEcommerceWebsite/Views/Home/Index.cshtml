@@ -1,8 +1,72 @@
-﻿@{
+﻿@model ModelLayer.CustomerModel;
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome @Html.DisplayFor(customer => customer.Fname) @Html.DisplayFor(customer => customer.Lname)</h1>
+    <p class="h2"><small class="text-muted">What are we doing today?</small></p>
+</div>
+
+<br />
+
+<div class="col d-flex justify-content-center">
+    <div class="card w-50 h-25">
+        <div class="card-body">
+            <h5 class="text-center card-title">Shopping</h5>
+            <p class="card-text">Let's Go Shopping. Here we will be able do all of the online shopping from any store we have availabe</p>
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+                        <a asp-controller="Shop" asp-ac asp-action="Index" class="btn btn-primary">Let's Go</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+
+<div class="col d-flex justify-content-center">
+    <div class="card w-50 h-25">
+        <div class="card-body">
+            <h5 class="text-center card-title">View Order History</h5>
+            <p class="card-text">You can view your past history order(s). Or be able to view past orders by store.</p>
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+                        <a asp-controller="OrderHistory" asp-ac asp-action="Index" class="btn btn-primary">Let's Go</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+
+<div class="col d-flex justify-content-center">
+    <div class="card w-50 h-25">
+        <div class="card-body">
+            <h5 class="text-center card-title">Search Customer</h5>
+            <p class="card-text">The Search Customer. Some real shady stuff here
+             we can see all of customer information and be able to track them down, or not your choice!
+            </p>
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+                        <a asp-controller="CustomerSearch" asp-ac asp-action="Index" class="btn btn-primary">Let's Go</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br/>
+
+
+<div class="text-center">
+    <p class="text-center"><a asp-controller="Login" asp-action="Index">Signout</a></p>
 </div>

@@ -1,9 +1,12 @@
+using BusinessLayer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RepositoryLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +27,25 @@ namespace MyEcommerceWebsite
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDbContext<MyEcommerceDb>(options =>
+            {
+                if (!options.IsConfigured)
+                {
+                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                }
+            });
+
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromDays(1);
+            });
+            
+            // Add all of the services
+            services.AddScoped<ILogin, Login>();
+            services.AddScoped<ISignup, Signup>();
+            services.AddScoped<IShop, Shop>();
+            services.AddScoped<IStore, Store>();
+            services.AddScoped<ICustomer, Customer>();
+            services.AddScoped<IOrderHistory, OrderHistory>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +64,8 @@ namespace MyEcommerceWebsite
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseSession();
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -50,8 +74,18 @@ namespace MyEcommerceWebsite
             {
                 endpoints.MapControllerRoute(
                     name: "default",
+                    pattern: "{controller=Login}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
+                    name: "Home",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
+                    name: "Shop",
+                    pattern: "{controller=Shop}/{action}/{id?}");
+
             });
+
         }
     }
 }

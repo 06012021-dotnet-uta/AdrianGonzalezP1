@@ -11,26 +11,14 @@ namespace ModelLayer
     /// </summary>
     public class AddressModel
     {
-        public string Street { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
         public string City { get; set; }
+        public int Zipcode { get; set; }
         public string State { get; set; }
-        public string ZipCode { get; set; }
+        public string Country { get; set; }
 
         public AddressModel() { }
 
-        /// <summary>
-        /// This constructor is reponsible for initialzing the AddressModel object.
-        /// </summary>
-        /// <param name="Street"></param>
-        /// <param name="City"></param>
-        /// <param name="State"></param>
-        /// <param name="Zipcode"></param>
-        public AddressModel(string Street, string City, string State, string Zipcode)
-        {
-            this.Street = Street;
-            this.City = City;
-            this.State = State;
-            this.ZipCode = Zipcode;
-        }
     }
 }

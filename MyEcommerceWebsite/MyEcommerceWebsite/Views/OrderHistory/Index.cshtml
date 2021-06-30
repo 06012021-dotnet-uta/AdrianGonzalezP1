@@ -1,0 +1,68 @@
+﻿@model ModelLayer.CustomerModel;
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome @Html.DisplayFor(customer => customer.Fname) @Html.DisplayFor(customer => customer.Lname)</h1>
+    <p class="h2"><small class="text-muted"> Which orders are we looking for?</small></p>
+</div>
+
+<br />
+<div class="col d-flex justify-content-center">
+    <div class="card w-50 h-25">
+        <div class="card-body">
+            <h5 class="text-center card-title">By Store</h5>
+            <p class="card-text text-center">View Order History By Stores. Choose from all avaible location that we have availabe</p>
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+                        <a asp-controller="OrderHistory" asp-ac asp-action="HistoryByStore" class="btn btn-primary">Let's Go</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+
+<div class="col d-flex justify-content-center">
+    <div class="card w-50 h-25">
+        <div class="card-body">
+            <h5 class="text-center card-title">Your Order History</h5>
+            <p class="card-text text-center">You can View Your Own Personal Order History.</p>
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+                        <a asp-controller="OrderHistory" asp-ac asp-action="CustomerOrders" class="btn btn-primary">Let's Go</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+
+<div class="col d-flex justify-content-center">
+    <div class="card w-50 h-25">
+        <div class="card-body">
+            <h5 class="text-center card-title">All Orders</h5>
+            <p class="card-text text-center"> View Everyones Order History </p>
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+                        <a asp-controller="OrderHistory" asp-ac asp-action="AllOrders" class="btn btn-primary">Let's Go</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+
+<div class="text-center">
+    <p class="text-center"><a asp-controller="Home" asp-action="Index">Home Page</a></p>
+</div>

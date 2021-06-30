@@ -1,0 +1,66 @@
+﻿@model IEnumerable<ModelLayer.ProductModel>
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+
+
+<div class="row pt-4">
+    <div class="col-6">
+        <h2 class="text-primary">Availabe Products</h2>
+    </div>
+    <div class="col-6 text-right">
+        <a asp-action="Index" asp-controller="Shop" class="btn btn-primary">
+            <i class="fas fa-plus"></i> &nbsp;Back
+        </a>
+    </div>
+    <div class="col-6">
+        <a asp-action="OrderReview" asp-controller="Shop" class="btn btn-primary">
+            <i class="fas fa-plus"></i> &nbsp;Order Review
+        </a>
+    </div>
+</div>
+
+<br/><br/>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Qunatity)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Qunatity)
+            </td>
+            <td>
+                @Html.ActionLink("Add", "AddItem", item)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
