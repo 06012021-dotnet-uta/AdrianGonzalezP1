@@ -25,8 +25,8 @@ namespace ModelLayer
         public string ProductName { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal UnitPrice { get; set; }
-        [Range(0,int.MaxValue)]
         [Display(Prompt = "The Amount Taking")]
+        [Range(0, int.MaxValue)]
         public int Quantity { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal TotalAmount { get; set; }

@@ -38,7 +38,13 @@ namespace MyEcommerceWebsite.Controllers
             return View(stores);
         }
 
+
         // GET: Shop/Details/5
+        /// <summary>
+        /// Views the details of a store
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<ActionResult> Details(int id)
         {
             StoreModel stores = await _shop.GetStoreById(id);
@@ -71,6 +77,74 @@ namespace MyEcommerceWebsite.Controllers
             return View(order);
         }
 
+       /// <summary>
+       /// Customer Reviews order
+       /// </summary>
+       /// <returns></returns>
+        public ActionResult OrderReview()
+        {
+            List<OrderModel> orders;
+            int storeId = (int)TempData["StoreId"];
+            int customerId = (int)TempData["CustomerId"];
+            TempData.Keep("CustomerId");
+            TempData.Keep("StoreId");
+            decimal overAllTotal;
+
+            try
+            {
+                orders = JsonConvert.DeserializeObject<List<OrderModel>>((string)TempData["Orders"]);
+
+                overAllTotal = _shop.CalculateTotalAmount(orders, storeId,customerId);
+
+                TempData["Orders"] = JsonConvert.SerializeObject(orders);
+
+
+            }
+            catch (ArgumentNullException)
+            {
+
+                return RedirectToAction("Index");
+            }
+
+            ViewData["OverAllTotal"] =  overAllTotal;
+
+            return View(orders);
+        }
+
+        /// <summary>
+        /// Checks out the customer and saves it to the databse
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ActionResult> PlaceOrder()
+        {
+            List<OrderModel> orders;
+            bool didSave;
+
+            try
+            {
+                orders = JsonConvert.DeserializeObject<List<OrderModel>>((string)TempData["Orders"]);
+                TempData.Keep("Orders");
+
+                if (orders.Count > 0)
+                {
+
+                    didSave = await _shop.CheckoutAsync(orders);
+                }
+                else 
+                {
+                    return RedirectToAction("Index");
+                }
+
+            }
+            catch (ArgumentNullException)
+            {
+
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
 
         // POST: Shop/Create
         [HttpPost]
@@ -78,83 +152,34 @@ namespace MyEcommerceWebsite.Controllers
         public async Task<ActionResult> AddItem(OrderModel order)
         {
             bool isAdded;
-            try
-            {
-                isAdded = await _shop.AddItem(order);
 
-                if (isAdded)
+            if (ModelState.IsValid) 
+            {
+
+                try
                 {
-                    List<OrderModel> orders = JsonConvert.DeserializeObject<List<OrderModel>>((string)TempData["Orders"]);
-                    orders.Add(order);
-                    TempData["Orders"] = JsonConvert.SerializeObject(orders);
+                    isAdded = await _shop.AddItem(order);
+
+                    if (isAdded)
+                    {
+                        List<OrderModel> orders = JsonConvert.DeserializeObject<List<OrderModel>>((string)TempData["Orders"]);
+                        orders.Add(order);
+                        TempData["Orders"] = JsonConvert.SerializeObject(orders);
+                    }
+
+                    int storeID = (int)TempData["StoreId"];
+                    TempData.Keep("StoreId");
+
+                    return RedirectToAction("Products", new { id = storeID });
+                }
+                catch
+                {
+                    return View();
                 }
 
-                int storeID = (int)TempData["StoreId"];
-                TempData.Keep("StoreId");
+            }
 
-                return RedirectToAction("Products", new { id = storeID } );
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // POST: Shop/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Shop/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Shop/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Shop/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Shop/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return View(order);
         }
     }
 }

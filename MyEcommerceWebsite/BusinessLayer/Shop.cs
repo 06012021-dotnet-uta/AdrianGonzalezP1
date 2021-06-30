@@ -132,5 +132,54 @@ namespace BusinessLayer
 
             return isItemAdded;
         }
+
+        public decimal CalculateTotalAmount(List<OrderModel> orders, int StoreId, int CustomerId) 
+        {
+            decimal overAllTotal = 0.00m;
+
+            if(orders.Count >= 0) 
+            {
+                foreach (var order in orders)
+                {
+                    order.CustomerIdRef = CustomerId;
+                    order.StoreIdRef = StoreId;
+                    order.OrderDate = DateTime.Now;
+                    order.TotalAmount = (order.Quantity * order.UnitPrice);
+
+                    overAllTotal += (order.Quantity * order.UnitPrice);
+                }
+            } 
+            else 
+            {
+                return overAllTotal;
+            }
+
+
+            return overAllTotal;
+        }
+
+        public async Task<bool> CheckoutAsync(List<OrderModel> orders)
+        {
+            bool didCheckout;
+
+            try
+            {
+                await _.Orders.AddRangeAsync(orders);
+                await _.SaveChangesAsync();
+                didCheckout = true;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+
+                didCheckout = false;
+            }
+            catch (DbUpdateException)
+            {
+
+                didCheckout = false;
+            }
+
+            return didCheckout;
+        }
     }
 }

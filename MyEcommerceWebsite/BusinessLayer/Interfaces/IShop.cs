@@ -13,5 +13,9 @@ namespace BusinessLayer
         public List<ProductModel> GetProducts(int storeId);
         public Task<StoreModel> GetStoreById(int storeId);
         public Task<bool> AddItem(OrderModel order);
+
+        public Task<bool> CheckoutAsync(List<OrderModel> orders);
+
+        public decimal CalculateTotalAmount(List<OrderModel> orders, int StoreId, int CustomerId);
     }
 }
