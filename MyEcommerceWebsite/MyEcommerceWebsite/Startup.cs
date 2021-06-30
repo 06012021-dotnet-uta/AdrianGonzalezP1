@@ -34,12 +34,17 @@ namespace MyEcommerceWebsite
                     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
                 }
             });
+
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromDays(1);
+            });
             
             // Add all of the services
             services.AddScoped<ILogin, Login>();
             services.AddScoped<ISignup, Signup>();
             services.AddScoped<IShop, Shop>();
             services.AddScoped<IStore, Store>();
+            services.AddScoped<ICustomer, Customer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +63,8 @@ namespace MyEcommerceWebsite
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseSession();
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -70,7 +77,7 @@ namespace MyEcommerceWebsite
 
                 endpoints.MapControllerRoute(
                     name: "Home",
-                    pattern: "{controller=Home}/{action}/{Model?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
 
                 endpoints.MapControllerRoute(
                     name: "Shop",

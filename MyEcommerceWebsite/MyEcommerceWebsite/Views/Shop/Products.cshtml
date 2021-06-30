@@ -4,20 +4,24 @@
     ViewData["Title"] = "Products";
 }
 
-<h1>Products</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
+<div class="row pt-4">
+    <div class="col-6">
+        <h2 class="text-primary">Availabe Products</h2>
+    </div>
+    <div class="col-6 text-right">
+        <a asp-action="Index" asp-controller="Shop"  class="btn btn-primary">
+            <i class="fas fa-plus"></i> &nbsp;Back
+        </a>
+    </div>
+</div>
+
+<br/><br/>
+
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CategoryIdRef)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.ProductName)
             </th>
@@ -37,12 +41,6 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ProductId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CategoryIdRef)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.ProductName)
             </td>
             <td>
@@ -55,9 +53,7 @@
                 @Html.DisplayFor(modelItem => item.Qunatity)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Add", "AddItem", item)
             </td>
         </tr>
 }

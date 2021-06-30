@@ -55,8 +55,10 @@ namespace MyEcommerceWebsite.Controllers
                     // Grab users info
                     CustomerModel customer = await _login.GetUserInfoAsync(account);
 
+                    TempData["CustomerId"] = customer.CustomerId;
+
                     // Redirect to Home page
-                    return RedirectToAction("Index","Home",customer);
+                    return RedirectToAction("Index","Home");
                 }
             }
 

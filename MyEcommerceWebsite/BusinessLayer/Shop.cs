@@ -84,5 +84,53 @@ namespace BusinessLayer
 
             return store;
         }
+
+        /// <summary>
+        /// Responsible for checking to see if we can add item
+        /// </summary>
+        /// <param name="cart"></param>
+        /// <returns></returns>
+        public async Task<bool> AddItem (OrderModel order)
+        {
+            bool isItemAdded;
+            try
+            {
+                // Grab inventory with to check quantity
+                InventoryModel inventory = await _.Inventories.SingleOrDefaultAsync(inventory => inventory.ProductIdRef == order.ProductIdRef);
+
+                if(inventory != null &&  order.Quantity <= inventory.Quantity) 
+                {
+                    inventory.Quantity -= order.Quantity;
+                    await _.SaveChangesAsync();
+                    isItemAdded = true;
+                }
+                else
+                {
+                    isItemAdded = false;
+                }
+            }
+            catch (InvalidOperationException)
+            {
+
+                return false;
+            }
+            catch (ArgumentNullException)
+            {
+
+                return false;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+
+                return false;
+            }
+            catch (DbUpdateException)
+            {
+
+                return false;
+            }
+
+            return isItemAdded;
+        }
     }
 }

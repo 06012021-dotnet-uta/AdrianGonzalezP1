@@ -12,5 +12,6 @@ namespace BusinessLayer
         public Task<List<StoreModel>> GetAllStoresAsync();
         public List<ProductModel> GetProducts(int storeId);
         public Task<StoreModel> GetStoreById(int storeId);
+        public Task<bool> AddItem(OrderModel order);
     }
 }

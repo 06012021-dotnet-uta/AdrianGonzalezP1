@@ -21,8 +21,12 @@ namespace ModelLayer
         public int CustomerIdRef { get; set; }
         public int StoreIdRef { get; set; }
         public int ProductIdRef { get; set; }
+        [NotMapped]
+        public string ProductName { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal UnitPrice { get; set; }
+        [Range(0,int.MaxValue)]
+        [Display(Prompt = "The Amount Taking")]
         public int Quantity { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal TotalAmount { get; set; }
