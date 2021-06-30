@@ -1,0 +1,32 @@
+﻿@model ModelLayer.CustomerModel;
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome @Html.DisplayFor(customer => customer.Fname) @Html.DisplayFor(customer => customer.Lname)</h1>
+    <p class="h2"><small class="text-muted"> Which customer are we looking for?</small></p>
+</div>
+
+<br />
+<div class="col d-flex justify-content-center">
+    <div class="card w-50 h-25">
+        <div class="card-body">
+            <h5 class="text-center card-title">By Name</h5>
+            <p class="card-text text-center">Search A customer by First and Last Name</p>
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+                        <a asp-controller="CustomerSearch" asp-ac asp-action="SearchByName" class="btn btn-primary">Let's Go</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+
+<div class="text-center">
+    <p class="text-center"><a asp-controller="Home" asp-action="Index">Home Page</a></p>
+</div>

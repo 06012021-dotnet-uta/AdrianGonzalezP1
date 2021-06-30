@@ -12,6 +12,7 @@ namespace BusinessLayer
         List<CustomerModel> SearchCustomer(string Fname, string Lname);
         CustomerModel SearchCustomer(string username);
         CustomerModel SearchCustomer(int customerId);
+        List<CustomerModel> SearchCustomerList(int customerId);
         long LengthOfCustomers();
     }
 }

@@ -24,7 +24,19 @@ namespace BusinessLayer
 
         public List<CustomerModel> SearchCustomer(string Fname, string Lname)
         {
-            throw new NotImplementedException();
+            List<CustomerModel> customers;
+
+            try
+            {
+                customers = _.Customers.Where(customer => customer.Fname.ToLower() == Fname.ToLower().Trim() && customer.Lname == Lname.ToLower().Trim()).ToList();
+            }
+            catch (ArgumentNullException)
+            {
+
+                return null;
+            }
+
+            return customers;
         }
 
         public CustomerModel SearchCustomer(string username)
@@ -51,6 +63,23 @@ namespace BusinessLayer
             }
 
             return customer;
+        }
+
+        public List<CustomerModel> SearchCustomerList(int customerId)
+        {
+            List<CustomerModel> customers;
+
+            try
+            {
+                customers = _.Customers.Where(customer => customer.CustomerId == customerId).ToList();
+            }
+            catch (ArgumentNullException)
+            {
+
+                return null;
+            }
+
+            return customers;
         }
     }
 }

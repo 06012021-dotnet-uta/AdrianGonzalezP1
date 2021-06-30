@@ -1,0 +1,45 @@
+﻿@model ModelLayer.SearchCustomerModel
+
+@{
+    ViewData["Title"] = "SearchByName";
+}
+
+<div class="row pt-4">
+    <div class="col-6">
+        <h2 class="text-primary">Search For Customer</h2>
+    </div>
+    <div class="col-6 text-right">
+        <a asp-action="Index" asp-controller="CustomerSearch" class="btn btn-primary">
+            <i class="fas fa-plus"></i> &nbsp;Back
+        </a>
+    </div>
+</div>
+
+<br />
+<br />
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="SearchByName">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Fname" class="control-label"></label>
+                <input asp-for="Fname" class="form-control" />
+                <span asp-validation-for="Fname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lname" class="control-label"></label>
+                <input asp-for="Lname" class="form-control" />
+                <span asp-validation-for="Lname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
