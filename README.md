@@ -1,4 +1,4 @@
-# Ecommerce Web Store - Project 1
+# MyEcommerce Web Store - Project 1
 This is a ASP.NET Core MVC project utilizing Entity Framework Core to create a Web Store Application that allows a user to create an account then view store locations with differing inventories. The user can create an order, view their order history, and view a list of other customers.
 # Technologies Used
 - GitHub
